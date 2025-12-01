@@ -1,20 +1,7 @@
 import {
   Component,
-  OnInit,
   HostListener,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  keyframes,
-} from '@angular/animations';
 import AOS from 'aos';
 export interface Service {
   icon: string;
@@ -72,12 +59,11 @@ export interface Stat {
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  // Navigation state
+ 
   isScrolled = false;
   isMobileMenuOpen = false;
   activeSection = 'home';
 
-  // Contact form
   contactForm = {
     name: '',
     email: '',
@@ -87,7 +73,7 @@ export class LandingPageComponent {
     message: '',
   };
 
-  // Navigation items
+  
   navItems = [
     { id: 'home', label: 'Home' },
     { id: 'products', label: 'Products' },
@@ -96,7 +82,7 @@ export class LandingPageComponent {
     { id: 'contact', label: 'Contact' },
   ];
 
-  // Product highlights for hero section
+
   productHighlights = [
     {
       title: 'Premium Diesel',
@@ -124,11 +110,12 @@ export class LandingPageComponent {
     },
   ];
 
-  // Stats data
+
   statsData = [
     {
       icon: 'award',
       value: 2021,
+      displayValue: 0,
       suffix: '',
       label: 'Year Established',
       description: 'Building trust since',
@@ -138,6 +125,7 @@ export class LandingPageComponent {
     {
       icon: 'package',
       value: 100,
+      displayValue: 0,
       suffix: 'K+',
       label: 'Tons Delivered',
       description: 'Annual capacity',
@@ -147,6 +135,7 @@ export class LandingPageComponent {
     {
       icon: 'globe',
       value: 25,
+      displayValue: 0,
       suffix: '+',
       label: 'Countries Served',
       description: 'Global reach',
@@ -156,6 +145,7 @@ export class LandingPageComponent {
     {
       icon: 'users',
       value: 500,
+      displayValue: 0,
       suffix: '+',
       label: 'Trusted Clients',
       description: 'Worldwide partners',
@@ -164,7 +154,9 @@ export class LandingPageComponent {
     },
   ];
 
-  // Achievements
+  private statsAnimated = false;
+
+
   achievements = [
     {
       icon: 'shield',
@@ -192,7 +184,7 @@ export class LandingPageComponent {
     },
   ];
 
-  // Products data
+ 
   products = [
     {
       name: 'Premium Diesel',
@@ -264,7 +256,7 @@ export class LandingPageComponent {
     },
   ];
 
-  // Contact info
+
   contactInfo = [
     {
       icon: 'phone',
@@ -302,7 +294,7 @@ export class LandingPageComponent {
     },
   ];
 
-  // Product selection for contact form
+ 
   productOptions = [
     'Premium Diesel',
     'SN 500 Base Oil',
@@ -312,7 +304,7 @@ export class LandingPageComponent {
     'Other',
   ];
 
-  // Footer links
+
   footerLinks = [
     {
       title: 'COMPANY',
@@ -348,14 +340,14 @@ export class LandingPageComponent {
     },
   ];
 
-  // Social links
+ 
   socialLinks = ['facebook', 'twitter', 'linkedin', 'instagram'];
 
   currentYear = new Date().getFullYear();
   servicesVisible = false;
   qualityVisible = false;
 
-  // Data
+
   services: Service[] = [
     {
       icon: 'globe',
@@ -583,16 +575,16 @@ export class LandingPageComponent {
   ];
 
   ngOnInit(): void {
-    // Initialize AOS with optimized settings for performance
+   
     AOS.init({
-      duration: 800,
+      duration: 600,
       easing: 'ease-out-cubic',
-      once: true, // Animation happens only once
-      offset: 100,
+      once: true,
+      offset: 50,
       delay: 0,
       disable: false,
       anchorPlacement: 'top-bottom',
-      mirror: false, // Don't animate out
+      mirror: false,
       throttleDelay: 99,
       debounceDelay: 50,
     });
@@ -601,11 +593,13 @@ export class LandingPageComponent {
   }
 
   ngOnDestroy(): void {
-    // Clean up AOS
-    AOS.refresh();
+
+  
   }
 
-  @HostListener('window:scroll', ['$event'])
+  
+
+  @HostListener('window:scroll')
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 20;
     this.updateActiveSection();
@@ -640,6 +634,20 @@ export class LandingPageComponent {
     }
     if (scrollPosition > 500) {
       this.qualityVisible = true;
+    }
+
+
+    if (!this.statsAnimated) {
+      const statsSection = document.querySelector('.stats-section');
+      if (statsSection) {
+        const rect = statsSection.getBoundingClientRect();
+        const isInView = rect.top <= window.innerHeight * 0.75 && rect.bottom >= 0;
+
+        if (isInView) {
+          this.statsAnimated = true;
+          this.animateStats();
+        }
+      }
     }
   }
 
@@ -684,4 +692,27 @@ export class LandingPageComponent {
     const icons = ['globe', 'microscope', 'shield', 'check'];
     return icons[index] || 'check';
   }
+
+
+  private animateStats(): void {
+    this.statsData.forEach((stat, index) => {
+      const duration = 2000;
+      const steps = 60;
+      const increment = stat.value / steps;
+      const stepDuration = duration / steps;
+      let currentStep = 0;
+
+      const interval = setInterval(() => {
+        currentStep++;
+        if (currentStep <= steps) {
+          stat.displayValue = Math.round(increment * currentStep);
+        } else {
+          stat.displayValue = stat.value;
+          clearInterval(interval);
+        }
+      }, stepDuration);
+    });
+  }
+
+  
 }
