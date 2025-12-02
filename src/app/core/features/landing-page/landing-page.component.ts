@@ -1,7 +1,10 @@
 import {
   Component,
   HostListener,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import AOS from 'aos';
 export interface Service {
   icon: string;
@@ -59,7 +62,7 @@ export interface Stat {
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
- 
+   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   isScrolled = false;
   isMobileMenuOpen = false;
   activeSection = 'home';
@@ -576,19 +579,22 @@ export class LandingPageComponent {
 
   ngOnInit(): void {
    
-    AOS.init({
-      duration: 600,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 50,
-      delay: 0,
-      disable: false,
-      anchorPlacement: 'top-bottom',
-      mirror: false,
-      throttleDelay: 99,
-      debounceDelay: 50,
-    });
-
+   if (isPlatformBrowser(this.platformId)) {
+      import('aos').then(aos => {
+        aos.default.init({
+          duration: 600,
+          easing: 'ease-out-cubic',
+          once: true,
+          offset: 50,
+          delay: 0,
+          disable: false,
+          anchorPlacement: 'top-bottom',
+          mirror: false,
+          throttleDelay: 99,
+          debounceDelay: 50,
+        });
+      });
+    }
     this.handleScroll();
   }
 
@@ -601,12 +607,16 @@ export class LandingPageComponent {
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    this.isScrolled = window.pageYOffset > 20;
-    this.updateActiveSection();
-    this.handleScroll();
+    if (isPlatformBrowser(this.platformId)) {
+      this.isScrolled = window.pageYOffset > 20;
+      this.updateActiveSection();
+      this.handleScroll();
+    }
   }
 
   updateActiveSection() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
     const sections = ['home', 'products', 'services', 'quality', 'contact'];
     const currentSection = sections.find((section) => {
       const element = document.getElementById(section);
@@ -622,12 +632,15 @@ export class LandingPageComponent {
     }
   }
 
-  private handleScroll(): void {
+   private handleScroll(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
     const scrollPosition =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
       document.body.scrollTop ||
       0;
+
 
     if (scrollPosition > 100) {
       this.servicesVisible = true;
@@ -651,7 +664,9 @@ export class LandingPageComponent {
     }
   }
 
-  scrollToSection(sectionId: string) {
+ scrollToSection(sectionId: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 80;
