@@ -14,18 +14,14 @@
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          <div class="logo-icon">
-            <span>JF</span>
-          </div>
-          <div class="logo-text">
+          <div class="logo-container">
             <div
-              class="company-name"
-              [class.dark-text]="isScrolled"
-              [class.light-text]="!isScrolled"
+              class="logo-image"
+              data-aos="flip-left"
+              data-aos-duration="800"
             >
-              JET FUEL TRADING
+              <img src="jetfuel.png" alt="JetFuel Trading Logo" />
             </div>
-            <div class="company-subtitle">L.L.C</div>
           </div>
         </div>
 
@@ -1934,35 +1930,68 @@
         </div>
       </div>
 
-      <!-- Map Placeholder -->
-      <div class="map-placeholder" data-aos="fade-up" data-aos-delay="1000">
-        <div class="map-content">
-          <svg
-            class="icon-xl"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            data-aos="flip-left"
-            data-aos-delay="1100"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-            />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-          <div class="map-title" data-aos="fade-up" data-aos-delay="200">
-            Visit Our Location
-          </div>
-          <div class="map-address" data-aos="fade-up" data-aos-delay="300">
-            Shabra No. 1, Jurf Industrial Zone 2, Ajman, UAE
+     <!-- Google Map -->
+      <div class="map-container" data-aos="fade-up" data-aos-delay="1000">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.8658688968486!2d55.55117037531753!3d25.435670877582436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDI2JzA4LjQiTiA1NcKwMzMnMTMuNSJF!5e0!3m2!1sen!2sae!4v1234567890123!5m2!1sen!2sae"
+          width="100%"
+          height="500"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          data-aos="zoom-in"
+          data-aos-delay="1100"
+        ></iframe>
+        <div class="map-overlay" data-aos="fade-up" data-aos-delay="1200">
+          <div class="map-info-card">
+            <svg
+              class="icon-lg"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <div class="map-info-text">
+              <div class="map-info-title">Visit Our Location</div>
+              <div class="map-info-address">
+                Shabra No. 1, Jurf Industrial Zone 2<br />
+                Ajman, United Arab Emirates
+              </div>
+              <a
+                href="https://www.google.com/maps/place/25%C2%B026'08.4%22N+55%C2%B033'13.5%22E/@25.4356709,55.5511704,17z/data=!3m1!4b1!4m4!3m3!8m2!3d25.4356709!4d55.5537453?entry=ttu&g_ep=EgoyMDI1MTEzMC4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="map-direction-btn"
+              >
+                GET DIRECTIONS
+                <svg
+                  class="icon-sm"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -1986,19 +2015,10 @@
       <div class="footer-top">
         <div class="footer-brand" data-aos="fade-up" data-aos-delay="400">
           <div class="logo" data-aos="fade-right" data-aos-delay="500">
-            <div class="logo-icon" data-aos="flip-left" data-aos-delay="600">
-              <span>JF</span>
-            </div>
-            <div class="logo-text">
-              <div class="company-name" data-aos="fade-up" data-aos-delay="700">
-                JET FUEL TRADING
-              </div>
-              <div
-                class="company-subtitle"
-                data-aos="fade-up"
-                data-aos-delay="800"
-              >
-                L.L.C
+            <div class="logo-container">
+              <div class="logo-image " data-aos="flip-left" data-aos-delay="600">
+                <img src="jetfuel.png" alt="JetFuel Trading Logo" />
+                
               </div>
             </div>
           </div>
