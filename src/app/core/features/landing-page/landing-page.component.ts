@@ -15,6 +15,17 @@ export interface Service {
   image: string;
 }
 
+export interface StatData {
+  icon: string;
+  value: number;        
+  displayValue: number;   
+  suffix: string;
+  label: string;
+  description: string;
+  color1: string;
+  color2: string;
+}
+
 export interface Testimonial {
   quote: string;
   author: string;
@@ -114,7 +125,7 @@ export class LandingPageComponent {
   ];
 
 
-  statsData = [
+ statsData: StatData[] = [
     {
       icon: 'award',
       value: 2021,
@@ -710,24 +721,27 @@ export class LandingPageComponent {
 
 
   private animateStats(): void {
-    this.statsData.forEach((stat, index) => {
-      const duration = 2000;
-      const steps = 60;
-      const increment = stat.value / steps;
-      const stepDuration = duration / steps;
-      let currentStep = 0;
+  this.statsData.forEach((stat) => {
+    const duration = 2000;
+    const steps = 60;
+    const increment = stat.value / steps;
+    const stepDuration = duration / steps;
+    let currentStep = 0;
+    
+    // Reset display value
+    stat.displayValue = 0;
 
-      const interval = setInterval(() => {
-        currentStep++;
-        if (currentStep <= steps) {
-          stat.displayValue = Math.round(increment * currentStep);
-        } else {
-          stat.displayValue = stat.value;
-          clearInterval(interval);
-        }
-      }, stepDuration);
-    });
-  }
+    const interval = setInterval(() => {
+      currentStep++;
+      if (currentStep <= steps) {
+        stat.displayValue = Math.round(increment * currentStep);
+      } else {
+        stat.displayValue = stat.value;
+        clearInterval(interval);
+      }
+    }, stepDuration);
+  });
+}
 
   
 }
